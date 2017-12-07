@@ -12,19 +12,39 @@ This package is for scientists experienced with command-line tools who want to a
 Instructions below provide guidance on how to perform basic QC and preparation steps as well as analysis steps
  required to identify 5-methylcytosine or 5-hydroxymethylcytosine.
 
-## TODO FIGURE
+*Figure 1: TMWG-v2 Bioinformatics workflow including estimated compute time as percentage of total.*
 
-*Figure 4: TMWG-v2 Bioinformatics workflow including estimated compute time as percentage of total.*
+![Figure 1](./Figure1.png)
 
-## TODO TABLE
 
-*Table 2: Table of all steps for TMWG-v2 analysis including recommended software and website.*
+*Table 1: Table of all steps for TMWG-v2 analysis including recommended software and website.*
+
+
+| Step                                        | Software                         | Website                                             |
+|---------------------------------------------|----------------------------------|-----------------------------------------------------|
+| QC of fastq files                           | fastqc                           | http://www.bioinformatics.babraham.ac.uk/proje...   |
+| QC of CEGX tailed sequencing controls       | cegx\_bsExpress                  | https://bitbucket.org/cegx-bfx/cegx\_bsexpress\_... |
+| Filter for sequence quality & read trimming | cutadapt                         | http://github.com/marcelm/cutadapt/releases         |
+| Alignment                                   | Bismark                          | http://www.bioinformatics.babraham.ac.uk/proje...   |
+| Fragment size analysis                      | Picard CollectInsertSizeMetrics  | http://broadinstitute.github.io/picard              |
+| Remove duplicate reads                      | deduplicate\_bismark             | http://www.bioinformatics.babraham.ac.uk/proje...   |
+| Diversity rate & estimation of duplicates   | Preseq                           | http://smithlabresearch.org/software/preseq         |
+| Read coverage and GC content stats          | qualimap                         | https://bitbucket.org/kokonech/qualimap             |
+| Methylation calls                           | bismark \_methylation\_extractor | http://www.bioinformatics.babraham.ac.uk/proje...   |
+| Reporting                                   | multiQC                          | https://github.com/ewels/MultiQC                    |
+| Differential methylation                    | methylKit                        | https://bitbucket.org/cegx-bfx/cegxtools            |
+| Estimate hydroxymethylation                 | methpipe/mLmL                    | https://github.com/smithlabcode/methpipe/           |
+| Visualization                               | IGV                              | https://www.broadinstitute.org/igv/                 |
+
+
 
 # Pre-alignment
 
 ## Paired-end subsampling of read datasets
 
-In order to produce a small testing dataset during the setup of the tools described in this document, the tool seqtk sample can be used to randomly subsample a subset number of reads from a pair of fastq.gz files (*R1* and *R2*). Instructions on how to install this software and its dependencies can be found [on their github page](http://github.com/lh3/seqtk).
+In order to produce a small testing dataset during the setup of the tools described in this document,
+ the tool seqtk sample can be used to randomly subsample a subset number of reads from a pair of fastq.gz files (*R1* and *R2*).
+ Instructions on how to install this software and its dependencies can be found [on their github page](http://github.com/lh3/seqtk).
 
 ### Command line arguments to run seqtk sample
 
@@ -57,9 +77,13 @@ These files can be used for faster testing of the different steps described in t
 
 ## Paired-End Sequencing QC
 
-Given the `fastq.gz` files produced by Illumina sequencing, the quality of the sequencing data can be assessed using FastQC. Use cases are detailed below in Table3. Instructions on how to install this software tool and dependencies can be found [here](http://www.bioinformatics.babraham.ac.uk/projects/fastqc).
+Given the `fastq.gz` files produced by Illumina sequencing, the quality of the sequencing data can be assessed using FastQC.
+ Use cases are detailed below in Table3. Instructions on how to install this software tool and dependencies can be found 
+ [here](http://www.bioinformatics.babraham.ac.uk/projects/fastqc).
 
-These tools will perform a suite of QC analyses on the raw sequencing data and highlight any abnormal metrics that could affect further analysis. Abnormal metrics at this step may indicate sequencing runs that underperformed according to the manufacturer’s specifications due to sample quality, cluster density and/or other experimental factors.
+These tools will perform a suite of QC analyses on the raw sequencing data and highlight any abnormal
+ metrics that could affect further analysis. Abnormal metrics at this step may indicate sequencing runs that
+ underperformed according to the manufacturer’s specifications due to sample quality, cluster density and/or other experimental factors.
 
 ### FastQC:
 
@@ -118,7 +142,8 @@ This will produce the `SAMPLE_R1.trimmed.fq.gz` and `SAMPLE_R2.trimmed.fq.gz` fi
 
 ## _Skip this step for NuGEN Ovation Methyl-Seq Whole Genome_
 
-Following this step, the TMWG datasets need to be processed with a second cutadapt step, in order to trim the last 10 bases of Read1 (3’ end) and the first 10 bases of Read2 (`5’` end) as required for TMWG:
+Following this step, the TMWG datasets need to be processed with a second cutadapt step,
+ in order to trim the last 10 bases of Read1 (3’ end) and the first 10 bases of Read2 (`5’` end) as required for TMWG:
 
 Tool(s):
 
@@ -440,21 +465,23 @@ Output files(s):
 Given an aligned dataset containing paired-end Illumina reads, a number of the paired-end reads can
  overlap if the library insert size produced contains fragments smaller than the sum of the number of cycles of the paired-end run.
 
-Example 1: for a 2x75bp run, the sum of the number of cycles is 75+75=150 cycles. If the library contains
+### Example 1
+
+For a 2x75bp run, the sum of the number of cycles is 75+75=150 cycles. If the library contains
  fragments smaller than 150bp, reading those fragments with paired-end
-2x75bp Illumina reads will cause a number of bases to overlap. The fragments in the same library
+ 2x75bp Illumina reads will cause a number of bases to overlap. The fragments in the same library
  that are longer or equal to 150bp will not have overlapping bases.
 
-# TODO FIGURE
 
-Example 2: if the same library in example 1 is sequenced again, in this example with a
-2x150bp run, the sum of the number of cycles in this run will be 150+150=300 cycles.
+### Example 2
+
+If the same library in example 1 is sequenced again, in this example with a
+ 2x150bp run, the sum of the number of cycles in this run will be 150+150=300 cycles.
  This means that, for any fragment in the library insert size that is shorter than 300bp,
  there will be bases of the paired-end reads overlapping each other.
  Fragments in this sample that are between 151bp and 299bp will have bases overlapping, but they would not have overlapping bases in Example 1.
  The fragments in the same library that are longer than 300bp will not have overlapping bases in Example 1 nor in Example 2.
 
-# TODO FIGURE
 
 The methylation status of a sample can be biased by double-counting the converted and protected C’s in the overlapping paired-end reads.
  This bias can be prevented by running bismark_methylation_extractor with default parameters (not using
@@ -462,20 +489,24 @@ The methylation status of a sample can be biased by double-counting the converte
  The final number of usable bases for the bismark_methylation_extractor analysis will be
  smaller than the number of bases given in the input `.bam` file due to clip overlap.
 
-# TODO FIGURE
+---
 
-Figures 11-12 illustrate examples ranging from non-overlapping pairs (green reads in Figure 11 and Figure 12A)
+Figures 2-3 illustrate examples ranging from non-overlapping pairs (green reads in Figure 2 and Figure 3A)
  to pairs with increasing overlaps on longer read pairs or shorter templates
- (orange reads in Figure 12A and yellow or red reads in Figure 12B).
+ (orange reads in Figure 3A and yellow or red reads in Figure 3B).
  
-Figure 11: This figure was adapted from http://journal.frontiersin.org/article/10.3389/fgene.2014.00005/full
- and illustrates reads with no overlap.
- 
-Figure 12: This figure was adapted from http://journal.frontiersin.org/article/10.3389/fgene.2014.00005/full and illustrates reads with moderate overlap (A) and extreme overlap (B).
+*Figure 2: This figure was adapted from http://journal.frontiersin.org/article/10.3389/fgene.2014.00005/full
+ and illustrates reads with no overlap.*
 
-# TODO FIGURE
+![Figure2](Figure2.png)
 
-The extreme case depicted in Figure 12B is the red pair of reads, where read 1 (pointing to the right) goes beyond
+
+*Figure 3: This figure was adapted from http://journal.frontiersin.org/article/10.3389/fgene.2014.00005/full and illustrates reads with moderate overlap (A) and extreme overlap (B).*
+
+![Figure3](Figure3.png)
+
+
+The extreme case depicted in Figure 3B is the red pair of reads, where read 1 (pointing to the right) goes beyond
  the length of the fragment and starts sequencing into the 3’ adapter sequence (dark blue).
  The red read 2 (pointing to the left) also goes beyond the length of the fragment and starts sequencing into the
  5’ adapter sequence (dark blue). Read pairs like this extreme case will be difficult to align to the reference genome
