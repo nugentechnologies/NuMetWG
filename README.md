@@ -1,11 +1,9 @@
-# NuGEN Methylation Whole-Genome Analysis Guide
+# NuGEN Methylation Whole-Genome Analysis Guide for Paired-End Illumina Sequencing.
 
 For help with NuGEN products, contact NuGEN Technical Services [techserv@nugen.com](mailto:techserv@nugen.com) or post
  [an issue](https://github.com/nugentechnologies/NuMetWG/issues/new) here
 
-
 ## Who is this package for?
-
 
 This package is for scientists experienced with command-line tools who want to analyze bisulfite- and
  oxidative-bisulfite-treated DNA libraries from NuGEN (Ovation® Ultralow Methyl-Seq Library Systems)
@@ -14,18 +12,13 @@ This package is for scientists experienced with command-line tools who want to a
 Instructions below provide guidance on how to perform basic QC and preparation steps as well as analysis steps
  required to identify 5-methylcytosine or 5-hydroxymethylcytosine.
 
-
-# TODO FIGURE
+## TODO FIGURE
 
 *Figure 4: TMWG-v2 Bioinformatics workflow including estimated compute time as percentage of total.*
 
-# TODO TABLE
+## TODO TABLE
 
 *Table 2: Table of all steps for TMWG-v2 analysis including recommended software and website.*
-
-# Whole-Genome Analysis Guide for Illumina Sequencing.
-
-## Paired-End Whole-Genome datasets
 
 # Pre-alignment
 
