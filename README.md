@@ -6,24 +6,22 @@ For help with NuGEN products, contact NuGEN Technical Services [techserv@nugen.c
 ## Who is this package for?
 
 This package is for scientists experienced with command-line tools who want to analyze bisulfite- and
- oxidative-bisulfite-treated DNA libraries from NuGEN (Ovation® Ultralow Methyl-Seq Library Systems)
- or CEGX (TrueMethyl® Whole Genome) Whole Genome kits.
+ oxidative-bisulfite-treated DNA libraries from NuGEN (Ovation® Ultralow Methyl-Seq Library Systems) kits.
 
 Instructions below provide guidance on how to perform basic QC and preparation steps as well as analysis steps
  required to identify 5-methylcytosine or 5-hydroxymethylcytosine.
 
-*Figure 1: TMWG-v2 Bioinformatics workflow including estimated compute time as percentage of total.*
+*Figure 1: Bioinformatics workflow including estimated compute time as percentage of total.*
 
 ![Figure 1](./Figure1.png)
 
 
-*Table 1: Table of all steps for TMWG-v2 analysis including recommended software and website.*
+*Table 1: Table of all steps for analysis including recommended software and website.*
 
 
 | Step                                        | Software                         | Website                                             |
 |---------------------------------------------|----------------------------------|-----------------------------------------------------|
 | QC of fastq files                           | fastqc                           | http://www.bioinformatics.babraham.ac.uk/proje...   |
-| QC of CEGX tailed sequencing controls       | cegx\_bsExpress                  | https://bitbucket.org/cegx-bfx/cegx\_bsexpress\_... |
 | Filter for sequence quality & read trimming | cutadapt                         | http://github.com/marcelm/cutadapt/releases         |
 | Alignment                                   | Bismark                          | http://www.bioinformatics.babraham.ac.uk/proje...   |
 | Fragment size analysis                      | Picard CollectInsertSizeMetrics  | http://broadinstitute.github.io/picard              |
@@ -482,7 +480,7 @@ The extreme case depicted in Figure 3B is the red pair of reads, where read 1 (p
  The red read 2 (pointing to the left) also goes beyond the length of the fragment and starts sequencing into the
  5’ adapter sequence (dark blue). Read pairs like this extreme case will be difficult to align to the reference genome
  and will cause a sudden drop in the alignment rate at such insert sizes. The drop in the alignment rate will occur at
- the length equal to the number of cycles sequenced minus the length of the TMWG barcode (6bp for TMWG v1, 10bp for TMWG v2).
+ the length equal to the number of cycles sequenced minus the length of the barcode.
 
 
   - For a 2x75bp run, fragments shorter than 75bp-10bp=65bp will be difficult to align, so there will be a sudden drop in the alignment rate at insert size = 65bp.
