@@ -139,41 +139,6 @@ cutadapt –q 20 –m 15 -a AGATCGGAAGAGC -A AGATCGGAAGAGC -o SAMPLE_R1.trimmed.
 
 This will produce the `SAMPLE_R1.trimmed.fq.gz` and `SAMPLE_R2.trimmed.fq.gz` files.
 
-----
-
-# CEGX TrueMethyl WholeGenome _only_:
-
-## _Skip this step for NuGEN Ovation Methyl-Seq Whole Genome_
-
-Following this step, the TMWG datasets need to be processed with a second cutadapt step,
- in order to trim the last 10 bases of Read1 (3’ end) and the first 10 bases of Read2 (`5’` end) as required for TMWG:
-
-Tool(s):
-
-  - `cutadapt`
-
-Input files(s):
-
-  - `SAMPLE_R1.trimmed.fq.gz`
-  - `SAMPLE_R2.trimmed.fq.gz`
-
-Output file(s):
-
-  - `SAMPLE_R1.cut.fq.gz`
-  - `SAMPLE_R2.cut.fq.gz`
-
-```
-(Not for NuGEN kits): cutadapt –m 15 –u -10 –U 10 –o SAMPLE_R1.cut.fq.gz –p SAMPLE_R2.cut.fq.gz \
-    SAMPLE_R1.trimmed.fq.gz SAMPLE_R2.trimmed.fq.gz
-```
-
-NOTE: the TMWG-v1 (version1) of the CEGX TrueMethyl Whole Genome protocol requires trimming of `-u -6 -U 6` instead of
-`-u -10 -U 10`.
-
-The cutadapt application will produce the `SAMPLE_R1.cut.fq.gz` and `SAMPLE_R2.cut.fq.gz` files, which are then ready to be used for alignment.
-
-----
-
 # Alignment
 
 ## Paired-End alignment of reads to a reference genome
