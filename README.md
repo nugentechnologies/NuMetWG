@@ -291,12 +291,6 @@ Preseq is one of the most accurate and informative of the tools to estimate dive
 Instructions on how to install this software and its dependencies can be found 
  on the Smith Lab [website](http://smithlabresearch.org/software/preseq).
 
-
-There are other tools available to calculate diversity estimates,
- however we recommend Preseq as we find it gives the most accurate estimates for our post-bisulfite libraries.
-The original Preseq software [publication](https://www.ncbi.nlm.nih.gov/pubmed/23435259)
- compares methods and you can refer to it for more detail on the different tools.
-
 ### Post-alignment extrapolation of yields of distinct reads
 
 Preseq lc_extrap computes the expected future yield of distinct reads and bounds on the number of total distinct
