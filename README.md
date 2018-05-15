@@ -129,10 +129,10 @@ Output files(s):
   - `SAMPLE_R2.trimmed.fq.gz`
 
 
-This command assumes the adapter sequences: AGATCGGAAGAGC, AGATCGGAAGAGC
+This command assumes the adapter sequences: AGATCGGAAGAGC, AAATCAAAAAAAC
 
 ``` 
-cutadapt –q 20 –m 15 -a AGATCGGAAGAGC -A AGATCGGAAGAGC -o SAMPLE_R1.trimmed.fq.gz -p SAMPLE_R2.trimmed.fq.gz SAMPLE_R1.fastq.gz SAMPLE_R2.fastq.gz
+cutadapt –q 20 –m 15 -a AGATCGGAAGAGC -A AAATCAAAAAAAC -o SAMPLE_R1.trimmed.fq.gz -p SAMPLE_R2.trimmed.fq.gz SAMPLE_R1.fastq.gz SAMPLE_R2.fastq.gz
 ```
 
 This will produce the `SAMPLE_R1.trimmed.fq.gz` and `SAMPLE_R2.trimmed.fq.gz` files.
