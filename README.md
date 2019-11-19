@@ -6,7 +6,7 @@ For help with Tecan products, contact Tecan NGS Technical Support techserv-gn@te
 ## Who is this package for?
 
 This package is for scientists experienced with command-line tools who want to analyze bisulfite- and
- oxidative-bisulfite-treated DNA libraries from Tecan (Ultralow Methyl-Seq Library Systems) kits.
+ oxidative-bisulfite-treated DNA libraries from Tecan (Ultralow Methyl-Seq) kits.
 
 Instructions below provide guidance on how to perform basic QC and preparation steps as well as analysis steps
  required to identify 5-methylcytosine or 5-hydroxymethylcytosine.
